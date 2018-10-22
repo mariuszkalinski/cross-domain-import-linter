@@ -6,7 +6,7 @@ export const validateImports = (file: string) => {
     fs.readFile(file, 'utf8', (err, data) => {
       if (err) reject(err);
 
-      resolve(validateData(data));
+      resolve(validateData(data, file));
     });
   });
 };
