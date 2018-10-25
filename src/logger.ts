@@ -1,12 +1,11 @@
-import {
-  IBadImportsType,
-  IErrorType,
- } from './interfaces';
+/* tslint:disable no-console */
+
+import { IBadImportsType, IErrorType } from './interfaces';
 
 export const logger = (dataToLog: IErrorType[]) => {
-
   dataToLog.forEach(loggInfo => {
     console.info(`◌${loggInfo.fileName} \n  ◌ has crossdomain imports:`);
+    console.info(`◌${loggInfo.domain}`);
     loggInfo.badImports.forEach((element: IBadImportsType) => {
       console.info(
         '\x1b[33m%s\x1b[0m',

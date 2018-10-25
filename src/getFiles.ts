@@ -1,11 +1,9 @@
 import * as glob from 'glob';
 
 const options = {
-  absolute: true,
-  cwd: '/Users/mariuszkalinski/projects/cross-domain-import-linter/',
-  ignore: '/node_modules',
+  cwd: '../sample_files/src/components',
+  realpath: true,
 };
 
-export const getFiles = (
-  callback: (er: any, files: string[]) => void
-) => glob('sample_files/src/components/**/*.js', options, callback);
+export const getFiles = (callback: (er: any, files: string[]) => void) =>
+  glob('**/*.js', options, callback);
