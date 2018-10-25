@@ -29,6 +29,9 @@
     "watch": "npm run build -- --watch",
     "watch:test": "jest --watch"
   },
+  "bin": {
+    "lint-cross-domain-imports": "lib/index.js"
+  },
   "dependencies": {
     "@babel/parser": "^7.1.3",
     "@babel/types": "^7.1.3",

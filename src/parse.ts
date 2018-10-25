@@ -24,21 +24,26 @@ const validateImportRegex = new RegExp(
 const reduceSpecifiers = (spec: ISpecifier[]): string =>
   spec.reduce((specifiers, specifier) => {
     if (specifier.type === 'ImportSpecifier') {
-      return `${specifiers}${specifiers.length ? ',' : ''} ${specifier.imported.name}`;
+      return `${specifiers}${specifiers.length ? ',' : ''} ${
+        specifier.imported.name
+      }`;
     }
 
     return specifiers;
   }, '');
 
 const findDomain = (path: string): string | null => {
-  const findDomainRegex = new RegExp(`(?<=(${regexDirectoriesToValidate})\/).*?(?=\/)`, 'g');
+  const findDomainRegex = new RegExp(
+    `(?<=(${regexDirectoriesToValidate})\/).*?(?=\/)`,
+    'g'
+  );
   const fileDomain = findDomainRegex.exec(path);
   return fileDomain ? fileDomain[0] : '';
-}
+};
 
 export const validateData = (file: string, fileName: string): IErrorType => {
   const parsedFile: File = parse(file, options);
-  const fileRegex: RegExp= /(?<=src\/).*?(?=.js)/gm;
+  const fileRegex: RegExp = /(?<=src\/).*?(?=.js)/gm;
   const fileTrimmed: RegExpExecArray | null = fileRegex.exec(fileName);
   const relativeFileName = fileTrimmed ? fileTrimmed[0] : '';
   const domain = findDomain(relativeFileName);
@@ -48,7 +53,10 @@ export const validateData = (file: string, fileName: string): IErrorType => {
       if (node.type === 'ImportDeclaration') {
         const source = node.source.value;
         const sourceDomain = findDomain(source);
-        const canAddImport = validateImportRegex.test(node.source.value) && sourceDomain !== domain && sourceDomain !== 'common';
+        const canAddImport =
+          validateImportRegex.test(node.source.value) &&
+          sourceDomain !== domain &&
+          sourceDomain !== 'common';
 
         if (canAddImport) {
           return [
