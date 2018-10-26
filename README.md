@@ -10,3 +10,13 @@
 
 * list of common directories
 * regex to validate crossdomain imports
+
+```JS
+  "cdil": {
+    "globRegex": "src/**/*.js",
+    "directoriesToValidate": [
+      "components",
+      "containers"
+    ]
+  }
+```

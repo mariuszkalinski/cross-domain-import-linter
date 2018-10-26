@@ -67,12 +67,5 @@
       "js"
     ],
     "testEnvironment": "node"
-  },
-  "cdil": {
-    "globRegex": "sample_files/src/components/**/*.js",
-    "directoriesToValidate": [
-      "components",
-      "containers"
-    ]
   }
 }
