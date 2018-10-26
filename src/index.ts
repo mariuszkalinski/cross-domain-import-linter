@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /* tslint:disable no-console */
 
 import * as pjson from 'pjson';
