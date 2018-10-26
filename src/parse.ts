@@ -1,5 +1,6 @@
 import { parse } from '@babel/parser';
 import { File } from '@babel/types';
+import { OPTIONS } from './consts';
 import { IErrorType, ISpecifier } from './interfaces';
 
 const options: object = {
@@ -14,7 +15,7 @@ const options: object = {
   sourceType: 'module',
 };
 
-const directoriesToValidate = ['components', 'containers'];
+const { directoriesToValidate } = OPTIONS;
 const regexDirectoriesToValidate = directoriesToValidate.join('|');
 const validateImportRegex = new RegExp(
   `.*(${regexDirectoriesToValidate}).*`,

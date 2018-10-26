@@ -56,6 +56,10 @@
   version "8.10.36"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.36.tgz#eac05d576fbcd0b4ea3c912dc58c20475c08d9e4"
 
+"@types/package-json@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@types/package-json/-/package-json-4.0.1.tgz#96b83e0785afb15950baad3c571334332d327632"
+
 abab@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.0.tgz#aba0ab4c5eee2d4c79d3487d85450fb2376ebb0f"
@@ -2676,6 +2680,10 @@ pinkie-promise@^2.0.0:
 pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
+
+pjson@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/pjson/-/pjson-1.0.9.tgz#8a9520ce76a4739f8fee91679dad6b065b1c7938"
 
 pkg-dir@^2.0.0:
   version "2.0.0"

@@ -1,9 +1,9 @@
 import * as glob from 'glob';
+import { OPTIONS } from './consts';
 
 const options = {
-  cwd: '../sample_files/src/components',
   realpath: true,
 };
 
 export const getFiles = (callback: (er: any, files: string[]) => void) =>
-  glob('**/*.js', options, callback);
+  glob(OPTIONS.globRegex, options, callback);
