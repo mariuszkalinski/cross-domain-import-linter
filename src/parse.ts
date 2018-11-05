@@ -11,6 +11,7 @@ const options: object = {
     'optionalChaining',
     'objectRestSpread',
     'exportNamespaceFrom',
+    'flow',
   ],
   sourceType: 'module',
 };
@@ -39,47 +40,55 @@ const findDomain = (path: string): string | null => {
     'g'
   );
   const fileDomain = findDomainRegex.exec(path);
+
   return fileDomain ? fileDomain[0] : '';
 };
 
+export const reduceBadImports = (fileTree: any[], domain: string | null) => fileTree.reduce(
+  (reducedImports: any, node: any) => {
+    if (node.type === 'ImportDeclaration') {
+      const source = node.source.value;
+      const sourceDomain = findDomain(source);
+      const canAddImport =
+        validateImportRegex.test(node.source.value) &&
+        sourceDomain !== domain &&
+        sourceDomain !== 'common';
+
+      if (canAddImport) {
+        return [
+          ...reducedImports,
+          {
+            source,
+            specifiers: reduceSpecifiers(node.specifiers),
+          },
+        ];
+      }
+
+      return reducedImports;
+    }
+
+    return reducedImports;
+  },
+  []
+);
+
 export const validateData = (file: string, fileName: string): IErrorType => {
-  const parsedFile: File = parse(file, options);
   const fileRegex: RegExp = /(?<=src\/).*?(?=.js)/gm;
   const fileTrimmed: RegExpExecArray | null = fileRegex.exec(fileName);
   const relativeFileName = fileTrimmed ? fileTrimmed[0] : '';
   const domain = findDomain(relativeFileName);
-
-  const badImports = parsedFile.program.body.reduce(
-    (reducedImports: any, node: any) => {
-      if (node.type === 'ImportDeclaration') {
-        const source = node.source.value;
-        const sourceDomain = findDomain(source);
-        const canAddImport =
-          validateImportRegex.test(node.source.value) &&
-          sourceDomain !== domain &&
-          sourceDomain !== 'common';
-
-        if (canAddImport) {
-          return [
-            ...reducedImports,
-            {
-              source,
-              specifiers: reduceSpecifiers(node.specifiers),
-            },
-          ];
-        }
-
-        return reducedImports;
-      }
-
-      return reducedImports;
-    },
-    []
-  );
-
-  return {
-    badImports,
-    domain,
-    fileName: relativeFileName,
-  };
+  
+  try {
+    const parsedFile: File = parse(file, options);
+    const badImports = reduceBadImports(parsedFile.program.body, domain);
+  
+    return {
+      badImports,
+      domain,
+      fileName: relativeFileName,
+    };
+  }
+  catch (error) {
+    throw new Error(`Found issue during reading file: ${relativeFileName}. Try add proper babel-parser plugin in options`);
+  }
 };
